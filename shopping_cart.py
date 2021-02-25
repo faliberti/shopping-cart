@@ -39,4 +39,26 @@ def to_usd(my_price):
 
 # TODO: write some Python code here to produce the desired output
 
-print(products)
+#print(products)
+
+#Getting the date and time
+import datetime
+current_time = datetime.datetime.now()
+Readable_time = timestamp.strftime("%m/%d/%Y %I:%M %p")
+
+#start of the receipt
+print("-------------------------------------------------")
+print("               Stop & Shop")
+print("        Visit us at stopandshop.com")
+print("-------------------------------------------------")
+
+#ask the user for a product identifier
+##selected_id = input("Please inut a product identifier (1-20 are valid)")
+#selected_id = int(selected_id)
+#x = int(selected_id)
+#print(type(int(x)))
+
+#look up information about the product with the given identifier
+#print(products[0]['id'] == selected_id)
+##matching_products = [item for item in products if str(item['id']) == str(selected_id)]
+##print(matching_products)
