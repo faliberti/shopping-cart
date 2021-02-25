@@ -46,6 +46,19 @@ import datetime
 current_time = datetime.datetime.now()
 Readable_time = current_time.strftime("%m/%d/%Y %I:%M %p")
 
+#ask the user for a product identifier
+selectedIds = []
+while True:
+    selected_id = input("Please input a product identifier (1-20 are valid, and input DONE when you are finished)")
+    if selected_id.upper() == "DONE":
+        break
+    elif selected_id.upper() != 'DONE' and selected_id.isnumeric() == False:
+        print('Sorry, only DONE and the numbers 1-20 are valid inputs. Please try again')
+    elif int(selected_id) > products[-1]['id'] or int(selected_id) < products[0]['id']:
+        print('Sorry that number is out of the range of 1-20, please try again or enter DONE to finish')
+    else:
+        selectedIds.append(selected_id)
+
 #start of the receipt
 print("-----------------------------------------------")
 print("              Stop & Shop")
@@ -57,23 +70,23 @@ print("    CHECKOUT AT: " + (Readable_time))
 print("-----------------------------------------------")
 print('Selected Products: ')
 
-#ask the user for a product identifier
-selectedIds = []
-while True:
-    selected_id = input("Please input a product identifier (1-20 are valid, and input DONE when you are finished)")
-    if selected_id.upper() == "DONE":
-        break
-    elif selected_id.upper() != 'DONE' and selected_id.isnumeric() == False:
-        print('Sorry, only DONE and the numbers 1-20 are valid inputs. Please try again')
-    elif int(selected_id) > 20 or int(selected_id) < 1:
-        print('Sorry that number is out of the range of 1-20, please try again or enter DONE to finish')
-    else:
-        selectedIds.append(selected_id)
-
 #look up information about the product with the given identifier
-PriceTotal = 0
+SubTotal = 0
+TaxAmount = 0
+TotalPrice = 0
 for selected_id in selectedIds:
     matching_products = [x for x in products if x['id'] == int(selected_id)]
     matching_products = matching_products[0]
-    PriceTotal = (PriceTotal + matching_products['price'])
+    SubTotal = (SubTotal + matching_products['price'])
     print('----', matching_products['name'], '(', (str(to_usd(matching_products['price']))), ')')
+    TaxAmount = (SubTotal * .0875)
+    TotalPrice = (SubTotal + TaxAmount)
+
+#print the End of the Receipt
+print("-----------------------------------------------")
+print('SUBTOTAL:', str(to_usd(SubTotal)))
+print("TAX:", str(to_usd(TaxAmount)))
+print("TOTAL:", str(to_usd(TotalPrice)))
+print("-----------------------------------------------")
+print("       Thank You, See You Again Soon!")
+print("-----------------------------------------------")
