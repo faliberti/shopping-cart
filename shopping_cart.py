@@ -44,21 +44,36 @@ def to_usd(my_price):
 #Getting the date and time
 import datetime
 current_time = datetime.datetime.now()
-Readable_time = timestamp.strftime("%m/%d/%Y %I:%M %p")
+Readable_time = current_time.strftime("%m/%d/%Y %I:%M %p")
 
 #start of the receipt
-print("-------------------------------------------------")
-print("               Stop & Shop")
-print("        Visit us at stopandshop.com")
-print("-------------------------------------------------")
+print("-----------------------------------------------")
+print("              Stop & Shop")
+print("       Visit us at stopandshop.com")
+print("-----------------------------------------------")
+
+#printing the time on the receipt
+print("    CHECKOUT AT: " + (Readable_time))
+print("-----------------------------------------------")
+print('Selected Products: ')
 
 #ask the user for a product identifier
-##selected_id = input("Please inut a product identifier (1-20 are valid)")
-#selected_id = int(selected_id)
-#x = int(selected_id)
-#print(type(int(x)))
+selectedIds = []
+while True:
+    selected_id = input("Please input a product identifier (1-20 are valid, and input DONE when you are finished)")
+    if selected_id.upper() == "DONE":
+        break
+    elif selected_id.upper() != 'DONE' and selected_id.isnumeric() == False:
+        print('Sorry, only DONE and the numbers 1-20 are valid inputs. Please try again')
+    elif int(selected_id) > 20 or int(selected_id) < 1:
+        print('Sorry that number is out of the range of 1-20, please try again or enter DONE to finish')
+    else:
+        selectedIds.append(selected_id)
 
 #look up information about the product with the given identifier
-#print(products[0]['id'] == selected_id)
-##matching_products = [item for item in products if str(item['id']) == str(selected_id)]
-##print(matching_products)
+PriceTotal = 0
+for selected_id in selectedIds:
+    matching_products = [x for x in products if x['id'] == int(selected_id)]
+    matching_products = matching_products[0]
+    PriceTotal = (PriceTotal + matching_products['price'])
+    print('----', matching_products['name'], '(', (str(to_usd(matching_products['price']))), ')')
